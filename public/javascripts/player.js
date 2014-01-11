@@ -12,7 +12,18 @@ $(function() {
     }else{
       keyCode = e.keyCode;
     }
+
+    return false;
+
   });
 
-  return false;
+  var player = $('.player').detach();
+  var myself = player.clone();
+
+  var socket = io.connect();
+  socket.on('setPlayer', function (data) {
+    if ( data > 0 ) {
+      $('body').append(myself.addClass('player'+data));
+    }
+  });
 })

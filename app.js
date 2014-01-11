@@ -5,10 +5,9 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
+var io = require('socket.io');
 var app = express();
 
 // all environments
@@ -29,8 +28,21 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function(){
+server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+var players = [1,2,3,4]; 
+players.sort(function() {
+  return 0.5 - Math.random();
+});
+
+var socket = io.listen(server);
+socket.on('connection', function(client) {
+  var player = null;
+  if ( players.length > 0 ) {
+    player = players.shift();
+    client.emit('setPlayer', player);
+  }
 });
