@@ -1,5 +1,7 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -43,4 +45,31 @@ a {
 
 .player4 .runner{
   background: url('../images/player4.png');
+}
+
+#gameover{
+  display: none;
+  position: fixed;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background: no-repeat center 10% rgba(0,0,0,0.8);
+}
+
+#gameover .tip{
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  margin-top: 250px;
+  text-align: center;
+  font-size: 128px;
+  color: #FFF;
+}
+
+#gameover.winner{
+  background-image: url('../images/winner.png');
+}
+
+#gameover.loser{
+  background-image: url('../images/loser.png');
 }

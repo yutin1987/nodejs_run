@@ -39,6 +39,7 @@ players.sort(function() {
 });
 
 var runner = [0,0,0,0];
+var winner = null;
 
 var socket = io.listen(server);
 socket.on('connection', function(client) {
@@ -57,8 +58,12 @@ socket.on('connection', function(client) {
     }
   };
 
+  if ( winner > 0 ) {
+    client.emit('sethWinner', winner);
+  }
+
   client.on('disconnect', function(){
-    runner[player] = 0;
+    runner[player-1] = 0;
     players.push(player);
     client.broadcast.emit('delPlayer', player);
   });
@@ -66,6 +71,9 @@ socket.on('connection', function(client) {
   client.on('run', function(){
     if ( run < 100 ) {
       run += 1;
+    }else if( winner < 1 ) {
+      winner = player;
+      socket.sockets.emit('setWinner', winner);
     }
     runner[player-1] = run;
   });

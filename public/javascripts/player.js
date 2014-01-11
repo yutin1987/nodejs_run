@@ -14,8 +14,7 @@ $(function() {
       keyCode = e.keyCode;
     }
 
-    return false;
-
+    // return false;
   });
 
   var player = $('.player').detach();
@@ -45,5 +44,10 @@ $(function() {
           $('.player'+(i+1)+' .runner').css('left', runner[i] + '%');
         };
       }
+    })
+    .on('setWinner', function(winner) {
+        $('#gameover').attr('class', winner == myId ? 'winner' : 'loser')
+                      .show()
+                      .find('.tip').text(winner == myId ? 'WINNER' : 'LOSER');
     });
 })
