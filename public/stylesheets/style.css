@@ -1,8 +1,28 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.player{
+  border-bottom: 3px #6E511E solid;
+  height: 200px;
+  width: 100%;
+}
+
+.track{
+  position: relative;
+  height: 200px;
+  margin-right: 180px;
+}
+
+.runner{
+  height: 160px;
+  width: 160px;
+  border: 6px #FF4C00 solid;
+  border-radius: 160px;
+  position: absolute;
+  bottom: 5px;
 }
