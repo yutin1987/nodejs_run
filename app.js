@@ -45,4 +45,7 @@ socket.on('connection', function(client) {
     player = players.shift();
     client.emit('setPlayer', player);
   }
+  client.on('disconnect', function(){
+    players.push(player);
+  });
 });
