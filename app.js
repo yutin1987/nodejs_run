@@ -46,6 +46,13 @@ socket.on('connection', function(client) {
     client.emit('setPlayer', player);
     client.broadcast.emit('addPlayer', player);
   }
+
+  for (var i = 1; i <= 4; i++) {
+    if ( players.indexOf(i) < 0 && i!=player) {
+      client.emit('addPlayer', i);
+    }
+  };
+
   client.on('disconnect', function(){
     players.push(player);
     client.broadcast.emit('delPlayer', player);
