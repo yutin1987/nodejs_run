@@ -25,4 +25,6 @@ a {
   border-radius: 160px;
   position: absolute;
   bottom: 5px;
+  transition: left 0.5s;
+  -webkit-transition: left 0.5s;
 }
