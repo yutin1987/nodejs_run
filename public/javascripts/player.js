@@ -49,5 +49,10 @@ $(function() {
         $('#gameover').attr('class', winner == myId ? 'winner' : 'loser')
                       .show()
                       .find('.tip').text(winner == myId ? 'WINNER' : 'LOSER');
+    })
+    .on('restart', function(){
+      $('.player .runner').css('left', '0%');
+      position = 0;
+      $('#gameover').hide();
     });
 })

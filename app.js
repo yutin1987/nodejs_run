@@ -44,7 +44,6 @@ var winner = null;
 var socket = io.listen(server);
 socket.on('connection', function(client) {
   var player = null;
-  var run = 0;
 
   if ( players.length > 0 ) {
     player = players.shift();
@@ -69,13 +68,17 @@ socket.on('connection', function(client) {
   });
 
   client.on('run', function(){
-    if ( run < 100 ) {
-      run += 1;
+    if ( runner[player-1] < 100 ) {
+      runner[player-1] += 1;
     }else if( winner < 1 ) {
       winner = player;
       socket.sockets.emit('setWinner', winner);
+      setTimeout( function () {
+        runner = [0,0,0,0];
+        winner = null;
+        socket.sockets.emit('restart', winner);
+      }, 10000);
     }
-    runner[player-1] = run;
   });
 });
 
