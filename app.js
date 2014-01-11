@@ -38,9 +38,13 @@ players.sort(function() {
   return 0.5 - Math.random();
 });
 
+var runner = [0,0,0,0];
+
 var socket = io.listen(server);
 socket.on('connection', function(client) {
   var player = null;
+  var run = 0;
+
   if ( players.length > 0 ) {
     player = players.shift();
     client.emit('setPlayer', player);
@@ -54,7 +58,20 @@ socket.on('connection', function(client) {
   };
 
   client.on('disconnect', function(){
+    runner[player] = 0;
     players.push(player);
     client.broadcast.emit('delPlayer', player);
   });
+
+  client.on('run', function(){
+    if ( run < 100 ) {
+      run += 1;
+    }
+    runner[player-1] = run;
+  });
 });
+
+(broadcastRunner = function(){
+  socket.sockets.emit('runner', runner);
+  setTimeout(broadcastRunner, 1000);
+})();
