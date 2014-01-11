@@ -44,8 +44,10 @@ socket.on('connection', function(client) {
   if ( players.length > 0 ) {
     player = players.shift();
     client.emit('setPlayer', player);
+    client.broadcast.emit('addPlayer', player);
   }
   client.on('disconnect', function(){
     players.push(player);
+    client.broadcast.emit('delPlayer', player);
   });
 });

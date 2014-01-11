@@ -7,7 +7,7 @@ $(function() {
       if (position < 100){
         position += 1;
         keyCode = 0;
-        $('.runner').css('left', position + '%');
+        $('#myself .runner').css('left', position + '%');
       }
     }else{
       keyCode = e.keyCode;
@@ -18,12 +18,21 @@ $(function() {
   });
 
   var player = $('.player').detach();
-  var myself = player.clone();
+  var myself = player.clone().attr('id','myself');
 
   var socket = io.connect();
-  socket.on('setPlayer', function (data) {
-    if ( data > 0 ) {
-      $('body').append(myself.addClass('player'+data));
-    }
-  });
+  socket
+    .on('setPlayer', function (data) {
+      if ( data > 0 ) {
+        $('body').append(myself.addClass('player'+data));
+      }
+    })
+    .on('addPlayer', function (data) {
+      player.clone()
+            .addClass('player'+data)
+            .appendTo('body');
+    })
+    .on('delPlayer', function (data) {
+      $('.player'+data).remove();
+    })
 })
